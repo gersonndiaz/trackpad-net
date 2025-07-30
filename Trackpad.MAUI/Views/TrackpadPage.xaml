@@ -1,27 +1,37 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="Trackpad.MAUI.Views.TrackpadPage"
              Title="Trackpad">
     <Grid RowDefinitions="Auto,*" Padding="10">
+
+        <!-- Estado de conexión -->
         <Label x:Name="StatusLabel"
                Text="Conectando..."
                HorizontalOptions="Center"
                FontSize="18" />
+
+        <!-- Área táctil: gestos nativos + TouchBehavior para detección adicional -->
         <Frame Grid.Row="1"
                x:Name="TouchArea"
                CornerRadius="20"
                BorderColor="White"
                HasShadow="False"
                BackgroundColor="{DynamicResource TouchAreaColor}">
+
+            <!-- Reconocedores nativos para gestos comunes -->
             <Frame.GestureRecognizers>
-                <!-- Zoom (Pinch) -->
                 <PinchGestureRecognizer PinchUpdated="OnPinchUpdated" />
-                <!-- Scroll (2-finger pan) -->
                 <PanGestureRecognizer PanUpdated="OnPanUpdated" TouchPoints="2" />
-                <!-- Desktop change (4-finger pan) -->
                 <PanGestureRecognizer PanUpdated="OnDeskPanUpdated" TouchPoints="4" />
+                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnSingleTap" />
+                <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="OnDoubleTap" />
+                <SwipeGestureRecognizer Direction="Up" Swiped="OnSwipeUp" />
+                <SwipeGestureRecognizer Direction="Down" Swiped="OnSwipeDown" />
             </Frame.GestureRecognizers>
+
+            <!-- Muestra el gesto detectado -->
             <Label x:Name="GestureLabel"
                    Text="Esperando gesto..."
                    HorizontalOptions="Center"
