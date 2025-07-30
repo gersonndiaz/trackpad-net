@@ -1,4 +1,6 @@
-﻿namespace Trackpad.MAUI;
+﻿using Trackpad.MAUI.Views;
+
+namespace Trackpad.MAUI;
 
 public partial class MainPage : ContentPage
 {
@@ -7,6 +9,13 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
+	}
+
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		// Navigate to the DiscoveryPage when the MainPage appears
+		Navigation.PushAsync(new DiscoveryPage());
 	}
 
 	private void OnCounterClicked(object? sender, EventArgs e)
